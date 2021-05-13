@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
 {
 
     public float Speed = 1;
-    public float Molla = 5;
     //****************************************
 
     private Rigidbody xPlayerBody;
@@ -29,11 +28,10 @@ public class PlayerController : MonoBehaviour
     {
         xAudio = GetComponent<AudioSource>();
         xPlayerBody = GetComponent<Rigidbody>();
-        //xPlayerBall = transform.Find("PlayerBall");
     }
 
 
-    void Update()
+    void FixedUpdate()
     {
 
         // posizione attuale del player
@@ -41,44 +39,32 @@ public class PlayerController : MonoBehaviour
         // rotazione attuale del player
         xPlayerRotation = this.transform.rotation;
 
-        xMov = Input.GetAxisRaw("Horizontal") * Speed;
-        zMov = Input.GetAxisRaw("Vertical") * Speed;
-
-
         if (Input.GetButtonDown("Jump"))
         {
-            yMov = Molla * 2;
+            yMov = Speed;
         }
         else
         {
             yMov = xPlayerBody.velocity.y;
         }
 
-
-        //xPlayerBody.velocity = new Vector3(xPlayerBody.velocity.x, yMov, xPlayerBody.velocity.z);
-
-        // movimento
-        xPlayerBody.velocity = new Vector3(xMov, yMov , zMov);
+        // movimento fisso, velocita'
+        xPlayerBody.velocity = new Vector3(Speed, xPlayerBody.velocity.y, xPlayerBody.velocity.z);
 
 
-        Debug.Log("xMov=" + xMov);
-        Debug.Log("zMov=" + zMov);
-
-        Debug.Log("xPlayerRotation=" + xPlayerRotation);
-        //Debug.Log("xPlayerRotation.Y=" + Mathf.Abs(xPlayerRotation.y));
-        //Debug.Log("xPlayerRotation.W=" + Mathf.Abs(xPlayerRotation.w));
+/*
 
         // rotazione sx/dx
         if (xMov < 0)
         {
-            if (Mathf.Abs(xPlayerRotation.y) > 0.6 )
+            if (Mathf.Abs(xPlayerRotation.y) > 0.6)
             {
                 xPlayerBody.transform.Rotate(0f, xMov, 0f, Space.Self);
             }
         }
         else if (xMov > 0)
         {
-            if (Mathf.Abs(xPlayerRotation.y) < 0.6 )
+            if (Mathf.Abs(xPlayerRotation.y) < 0.6)
             {
                 xPlayerBody.transform.Rotate(0f, xMov * -1, 0f, Space.Self);
             }
@@ -100,6 +86,7 @@ public class PlayerController : MonoBehaviour
                 xPlayerBody.transform.Rotate(0f, zMov * -1, 0f, Space.Self);
             }
         }
+*/
 
 
         //xPlayerBall.GetComponent<Transform>().rotation = new Vector3(1, 1, 1);
@@ -112,6 +99,7 @@ public class PlayerController : MonoBehaviour
         //    xMovement = new Vector3(60, 0, 0);
         //    xPlayerBody.MovePosition(transform.position + xMovement * Time.deltaTime * Speed);
         //}
+
     }
 
 
@@ -121,11 +109,11 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("PLAYER-coll-enter: " + collision.collider.name);
 
         // effetto molla
-        if (collision.collider.tag == "Ground")
-        {
-            yMov = Molla;
-            xPlayerBody.velocity = new Vector3(xPlayerBody.velocity.x, yMov, xPlayerBody.velocity.z);
-        }
+        //if (collision.collider.tag == "Ground")
+        //{
+        //    yMov = Molla;
+        //    xPlayerBody.velocity = new Vector3(xPlayerBody.velocity.x, yMov, xPlayerBody.velocity.z);
+        //}
 
         if (collision.collider.tag == "Friend")
         {
@@ -135,8 +123,6 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
-
-
 
 
 }

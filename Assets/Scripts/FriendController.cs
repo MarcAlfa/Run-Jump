@@ -24,7 +24,7 @@ public class FriendController : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("FRIEND-coll-enter: " + collision.collider.name);
+        //Debug.Log("FRIEND-coll-enter: " + collision.collider.name);
         if (collision.collider.tag == "Player")
         {
             xAudio.Play();
